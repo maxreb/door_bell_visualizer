@@ -6,9 +6,9 @@
 
     <StackLayout>
         <!-- Place new controls here -->
-    	<Label Text="Welcome to Xamarin.Form! nice!" 
-           HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />
+    	
+        <Button Text="Stop" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" FontSize="Large" WidthRequest="200" HeightRequest="200"
+                Clicked="Button_Clicked"></Button>
     </StackLayout>
 
 </ContentPage>

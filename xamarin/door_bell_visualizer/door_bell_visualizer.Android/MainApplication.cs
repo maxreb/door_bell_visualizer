@@ -5,6 +5,7 @@ using System.Text;
 
 using Android.App;
 using Android.Content;
+using Android.Media;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -16,13 +17,20 @@ namespace door_bell_visualizer.Droid
     [Application]
     public class MainApplication : Application
     {
+        private readonly Ringer ringer;
+
         public MainApplication(IntPtr handle, JniHandleOwnership transer) : base(handle, transer)
         {
+            ringer = new Ringer(ApplicationContext);
         }
+
+
 
         public override void OnCreate()
         {
             base.OnCreate();
+
+
 
             //Set the default notification channel for your app when running Android Oreo
             if ((int)Build.VERSION.SdkInt >= 26)
@@ -45,11 +53,26 @@ namespace door_bell_visualizer.Droid
             //Handle notification when app is closed here
             CrossFirebasePushNotification.Current.OnNotificationReceived += (s, p) =>
             {
+                if (p.Data.TryGetValue("body", out object val))
+                {
+                    switch ((string)val)
+                    {
+                        case "ring":
+                            ringer.Play();
+                            break;
+                        case "stop":
+                            ringer.Stop();
+                            break;
+                    }
 
+                }
 
             };
 
 
         }
+
     }
+
+
 }

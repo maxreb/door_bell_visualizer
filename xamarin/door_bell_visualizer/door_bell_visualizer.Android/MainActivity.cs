@@ -7,6 +7,7 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using Android.Media;
+using Plugin.FirebasePushNotification;
 
 namespace door_bell_visualizer.Droid
 {
@@ -26,16 +27,18 @@ namespace door_bell_visualizer.Droid
 
             LoadApplication(new App());
 
+            
+
 
 
         }
 
         protected override void OnStart()
         {
-            using (Ringtone r = RingtoneManager.GetRingtone(ApplicationContext, RingtoneManager.GetDefaultUri(RingtoneType.Ringtone)))
+            /*using (Ringtone r = RingtoneManager.GetRingtone(ApplicationContext, RingtoneManager.GetDefaultUri(RingtoneType.Ringtone)))
             {
                 r.Play();
-            }
+            }*/
             base.OnStart();
         }
     }
