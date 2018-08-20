@@ -25,7 +25,7 @@ const char* password = SECRET_PASS;
 
 
 // Initialize Telegram BOT
-const char BotToken[] = SECRET_BOT_TOKEN;
+const char* BotToken = SECRET_BOT_TOKEN;
 
 WiFiClientSecure net_ssl;
 TelegramBot bot (BotToken, net_ssl);
