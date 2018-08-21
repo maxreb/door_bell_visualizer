@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <WiFi.h>
 #include <WiFiClientSecure.h>
-#include "TelegramBot.h"
+#include <UniversalTelegramBot.h>
 #include "secrets.h"
 
 #define LED 13
@@ -9,9 +9,22 @@
 
 const char *fcmServer = "fcm-xmpp.googleapis.com";
 
+const char *textes[] = {"Hey Leute! Es klingeeelt!!",
+                        "Dingelingeling",
+                        "Ene mene miste, es rappelt an der Tür!!",
+                        "BRRRRIIINGG",
+                        "Leute, bin euch euer verkakter Türsteher? Es klingelt!",
+                        "Brah.. it rings",
+                        "yoyoyo, da klingelt ein po!",
+                        "ringing singing the door is belling",
+                        "Tür aufmachen, es könnte wichtig sein!",
+                        "Bot an Menschen: Es klingelt an eurer Tür",
+                        "macht die verkackte tür auf!",
+                        "Wow, einfach nur wow. Macht dir Tür auf!"};
+
 WiFiClientSecure client;
 const char *token = BOT_TOKEN;
-TelegramBot BotTelegram(token, client);
+UniversalTelegramBot bot(token, client);
 
 bool IsRingin();
 void SendAlarmToFirebase();
@@ -31,14 +44,14 @@ void setup()
         delay(100);
         Serial.print(".");
     }
-    BotTelegram.begin();
-    
+
     Serial.println("done");
     Serial.println(WiFi.localIP());
     Serial.println(WiFi.dnsIP());
+    Serial.println(sizeof(textes));
 
     delay(100);
-    BotTelegram.sendMessage(CHAT_ID, "Es klingelnt dingelt an der Tür");
+    //bot.sendMessage(CHAT_ID, "Bot meldet sich zum Dienst und wartet auf das Klingeln!");
     //Serial.println(client.connect("www.google.de",443));
 
     //Serial.println(WiFi.hostName("www.google.de"));
@@ -58,7 +71,7 @@ void loop()
         {
 
             lastRing = millis();
-            BotTelegram.sendMessage(CHAT_ID, "Es klingelnt dingelt an der Tür");
+            bot.sendMessage(CHAT_ID, textes[random(0,sizeof(textes)/4-1)]);
         }
     }
     digitalWrite(LED, IsRingin());
